@@ -96,13 +96,6 @@ training_args:                        # Arguments relative to training
   vllm_gpu_memory_utilization: 0.7
   vllm_device: cuda:1
   report_to: none
-language:
-  workspace: .
-  address: 127.0.0.1
-  port: 8765
-  context: true
-  opts: null
-  timeout: 10
 
 
 Powered by Hydra (https://hydra.cc)
