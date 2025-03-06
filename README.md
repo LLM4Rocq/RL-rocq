@@ -67,8 +67,50 @@ Config files should be in the `conf` directory.
 == Config ==
 Override anything in the config (foo.bar=value)
 
+data:
+  dir: data                           # Where to find the data.
+
+model: Qwen/Qwen2.5-0.5B-Instruct     # The model to use
+
+training_args:                        # Arguments relative to training
+  output_dir: /home/jviennot/scratch/outputs/Qwen-0.5B-GRPO
+  run_name: Qwen-0.5B-GRPO-rocq
+  learning_rate: 5.0e-06
+  adam_beta1: 0.9
+  adam_beta2: 0.99
+  weight_decay: 0.1
+  warmup_ratio: 0.1
+  lr_scheduler_type: cosine
+  logging_steps: 1
+  bf16: true
+  per_device_train_batch_size: 4
+  gradient_accumulation_steps: 1
+  num_generations: 4
+  max_prompt_length: 256
+  max_completion_length: 200
+  num_train_epochs: 1
+  save_steps: 100
+  max_grad_norm: 0.1
+  log_on_each_node: false
+  use_vllm: true
+  vllm_gpu_memory_utilization: 0.7
+  vllm_device: cuda:1
+  report_to: none
+language:
+  workspace: .
+  address: 127.0.0.1
+  port: 8765
+  context: true
+  opts: null
+  timeout: 10
+
+
 Powered by Hydra (https://hydra.cc)
 Use --hydra-help to view Hydra specific help
 ```
 
 You can use your own configuration file by putting it in the folder [conf](./conf) and writing:
+
+```bash
+$ accelerate launch train.py --config-name my_config.yaml
+```
