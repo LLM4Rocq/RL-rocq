@@ -126,9 +126,9 @@ training_args = GRPOConfig(
     lr_scheduler_type='cosine',
     logging_steps=1,
     bf16=True,
-    per_device_train_batch_size=1,
-    gradient_accumulation_steps=4,
-    num_generations=16,
+    per_device_train_batch_size=4,
+    gradient_accumulation_steps=1,
+    num_generations=4,
     max_prompt_length=256,
     max_completion_length=200,
     num_train_epochs=1,
@@ -137,7 +137,7 @@ training_args = GRPOConfig(
     log_on_each_node=False,
     use_vllm=True,
     vllm_gpu_memory_utilization=.3,
-    vllm_device="cuda:0",
+    vllm_device="cuda:1",
     report_to="none" #I'm disabling Wandb.
 )
 
