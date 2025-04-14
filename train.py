@@ -1,8 +1,6 @@
+import json
 import re
-import hydra
-from hydra.core.hydra_config import HydraConfig
 import torch
-from omegaconf import DictConfig, OmegaConf
 from openai.types.chat import ChatCompletionMessage as Response
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from trl import GRPOConfig, GRPOTrainer
@@ -36,13 +34,12 @@ def itype_check_reward_func(interface: language.Interface, completions: list[lis
             rewards.append(0.0)
     return rewards
 
-@hydra.main(version_base=None, config_path="conf", config_name="config")
-def main(cfg: DictConfig):
+def main():
+    with open("conf/config.json", "r") as config:
+        cfg = json.load(config)
 
     # Language interface
-    hydra_cfg = HydraConfig.get()
-    hydra_cfg = OmegaConf.to_container(hydra_cfg.runtime.choices)
-    match hydra_cfg["language"]:
+    match cfg.language.name:
         case "rocq":
             interface = language.RocqInterface(**cfg.language)
         case _:
