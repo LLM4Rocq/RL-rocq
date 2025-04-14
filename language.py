@@ -54,7 +54,9 @@ class RocqInterface(Interface):
         while os.path.exists(path):
             name += "0"
             path = Path(self.workspace, name + ".v")
-        self.blank_state = self.pet.get_root_state(path, opts=self.opts)
+        with open(path, "w"):
+            self.blank_state = self.pet.get_root_state(path, opts=self.opts)
+        os.remove(path)
 
     def type_check(self, code) -> Response:
         try:
